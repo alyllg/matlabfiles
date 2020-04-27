@@ -1,0 +1,21 @@
+clear
+clc
+t = [0.5;1;2;3;4;5;6;7;8;9]; %transpose matrix
+p = [7;5.2;3.8;3.2;2.5;2.1;1.8;1.5;1.2;1.1]; %function coefficients
+
+coef = [-1.5 -0.3 -0.05];
+
+% setup matrix Z
+for i = 1:10
+    for
+    j = 1:3
+    Z(i,j) = exp(coef(j)*t(i));
+    end
+end
+
+a = (Z'*Z)\(Z'*p);
+
+fprintf(' A = %f\r B = %f\r C = %f\r',a(1),a(2),a(3))
+
+p_calc = @(t) a(1)*exp(coef(1)*t) + a(2)*exp(coef(2)*t) + a(3)*exp(coef(3)*t);
+plot(t,p,'+',t,p_calc(t),'-')

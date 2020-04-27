@@ -1,0 +1,23 @@
+function x = naive_gauss(S,b)
+[n m] = size(S);
+[r s] = size(b);
+x = zeros(n,1);
+ 
+if n~=m
+    error('Matrix [A] is not a square matrix')
+elseif n~=r & s ~=1
+    error('Matrix dimension mismatch')
+elseif det(S) == 0
+    error('Matrix [A] is a singular matrix')
+else
+    A = [S, b]
+    for k = 1:n-1
+        for j=k+1:n
+            A(j,k:n+1)= A(j,k:n+1) -(A(j,k)/A(k,k)*A(k,k:n+1));
+        end
+    end
+    x(n) = A(n,n+1)/A(n,n);
+    for k=n-1:-1:1
+        x(k,:) = (A(k, n+1) - (A(k, k+1:n)*x(k+1:n)))/A(k,k);
+    end
+end
